@@ -1,25 +1,22 @@
-# NAM
+# NAM: Normalization-based Attention Module
 
 ## 1. 模块简介
+- **论文地址**: [https://arxiv.org/pdf/2111.12419](https://arxiv.org/pdf/2111.12419)
 - **源文件**: `NAM.py`
 
 ### 设计机制
-- from torchinfo import summary  # ע
-- from fvcore.nn import FlopCountAnalysis, flop_count_table  # ע
-- ĿNAM: Normalization-based Attention Module
-- Ŀ:  NAM ڹһעģ
-- ӣhttps://arxiv.org/pdf/2111.12419
-- ٷgithubhttps://github.com/Christian-lyc/NAM
-- ѧҽѧԺϢѧԺ
-- ؼʣһעռעͨעͼ
-- ΢ŹںţAI
-- עδԴռע룬´ɡ΢ŹںţAIṩ.
-- x״Ϊ (B, C, H, W)
-- ÿصȨ (Pixel Normalization)
-- # 㣬ע
+- from torchinfo import summary  # 计算参数量，可注释
+- from fvcore.nn import FlopCountAnalysis, flop_count_table  # 计算计算量，可注释
+- 中文题目:  NAM： 基于归一化的注意力模块
+- 官方github：https://github.com/Christian-lyc/NAM
+- 所属机构：东北大学医学院和生物信息工程学院等
+- 关键词：归一化注意力、空间注意力、通道注意力、图像分类
+- 输入特征：x，形状为 (B, C, H, W)
+- 计算每个像素的权重 (Pixel Normalization)
+- # 参数量计算，可注释
 - print("Model Summary:")
 - print(summary(nam, input_size=(1, 32, 256, 256), device=device.type))
-- # 㣬ע
+- # 计算量计算，可注释
 - flops = FlopCountAnalysis(nam, input)
 - print("\nFlop Count Table:")
 - print(flop_count_table(flops))
@@ -45,14 +42,14 @@
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
 
-    nam = NAM(channels=32).to(device)  # ģƶ豸
-    input = torch.rand(1, 32, 256, 256).to(device)  # ƶ豸
+    nam = NAM(channels=32).to(device)  # 将模型移动到设备
+    input = torch.rand(1, 32, 256, 256).to(device)  # 将输入数据移动到设备
 
-    # # 㣬ע
+    # # 参数量计算，可注释
     # print("Model Summary:")
     # print(summary(nam, input_size=(1, 32, 256, 256), device=device.type))
 
-    # # 㣬ע
+    # # 计算量计算，可注释
     # flops = FlopCountAnalysis(nam, input)
     # print("\nFlop Count Table:")
     # print(flop_count_table(flops))
@@ -62,6 +59,8 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Output shape: {output.shape}")
 ```
 
-## 4. 适用场景
-- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
-- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。
+## 4. 适用任务
+- **图像分类**
+- **医学图像处理**
+- **注意力机制应用**
+- **集成推荐**: 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。

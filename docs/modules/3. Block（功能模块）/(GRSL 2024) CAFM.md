@@ -1,16 +1,14 @@
-# (GRSL 2024) CAFM
+# Hybrid Convolutional and Attention Network for Hyperspectral Image Denoising
 
 ## 1. 模块简介
+- **论文地址**: [https://arxiv.org/pdf/2403.10067](https://arxiv.org/pdf/2403.10067)
 - **源文件**: `(GRSL 2024) CAFM.py`
 
 ### 设计机制
-- ĿHybrid Convolutional and Attention Network for Hyperspectral Image Denoising
-- Ŀ:  Ͼעڸ߹ͼȥ
-- ӣhttps://arxiv.org/pdf/2403.10067
-- ٷgithubhttps://github.com/summitgao/HCANet
-- йѧѧ뼼ѧԺѧϵ
-- ؼʣͼͼȥ룬任עƣѧϰ
-- ΢ŹںšAI
+- 中文题目:  混合卷积和注意力网络用于高光谱图像去噪
+- 官方github：https://github.com/summitgao/HCANet
+- 所属机构：中国海洋大学计算机科学与技术学院，密西西比州立大学电气与计算机工程系
+- 关键词：超光谱图像，图像去噪，变换器，注意力机制，深度学习
 - local conv
 - global SA
 
@@ -35,6 +33,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Output shape: {output.shape}")
 ```
 
-## 4. 适用场景
-- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
-- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。
+## 4. 适用任务
+- **图像去噪**
+- **注意力机制应用**
+- **集成推荐**: 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。

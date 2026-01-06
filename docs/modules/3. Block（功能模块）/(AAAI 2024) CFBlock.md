@@ -1,15 +1,14 @@
-# (AAAI 2024) CFBlock
+# SCTNet: Single-Branch CNN with Transformer Semantic Information for Real-Time Segmentation
 
 ## 1. 模块简介
+- **论文地址**: [https://arxiv.org/pdf/2312.17071](https://arxiv.org/pdf/2312.17071)
 - **源文件**: `(AAAI 2024) CFBlock.py`
 
 ### 设计机制
-- ĿSCTNet: Single-Branch CNN with Transformer Semantic Information for Real-Time Segmentation
-- Ŀ: ֧CNNTransformerϢʵʱָ
-- ӣhttps://arxiv.org/pdf/2312.17071
-- ٷgithubhttps://github.com/xzz777/SCTNet
-- пƼѧ˹ԶѧԺҶýϢܴصʵ
-- ؼʣʵʱָTransformer֧CNNϢ룬ѧϰ
+- 中文题目: 单分支CNN结合Transformer语义信息的实时分割网络
+- 官方github：https://github.com/xzz777/SCTNet
+- 所属机构：华中科技大学人工智能与自动化学院国家多媒体信息智能处理技术重点实验室
+- 关键词：实时语义分割，Transformer，单分支CNN，语义信息对齐，深度学习
 - BN->Conv->GELU->drop->Conv2->drop
 
 ## 2. 核心分析
@@ -49,6 +48,8 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(output.shape)
 ```
 
-## 4. 适用场景
-- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
-- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。
+## 4. 适用任务
+- **语义分割/实例分割**
+- **Transformer相关任务**
+- **注意力机制应用**
+- **集成推荐**: 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。

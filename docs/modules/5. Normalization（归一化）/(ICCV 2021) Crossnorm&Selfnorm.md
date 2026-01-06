@@ -9,7 +9,6 @@
 - 官方github：https://github.com/amazon-science/crossnorm-selfnorm
 - 所属机构：亚马逊网络服务，罗格斯大学
 - eps is a small value added to the variance to avoid divide-by-zero.
-- uniform
 
 ## 2. 核心分析
 ### 类定义与参数
@@ -45,6 +44,6 @@
     print("SelfNorm output shape:", x_sn.shape)
 ```
 
-## 4. 适用场景
-- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
-- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。
+## 4. 适用任务
+- **归一化/模型稳定化**
+- **集成推荐**: 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。

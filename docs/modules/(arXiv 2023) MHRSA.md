@@ -7,7 +7,6 @@
 ### 设计机制
 - class ASC(nn.Module):
 - """ Attentive Skip Connection
-- """
 - def __init__(self, channel):
 - super().__init__()
 - self.weight = nn.Sequential(
@@ -21,22 +20,6 @@
 - return out
 - if __name__ == '__main__':
 - # 定义输入张量的大小参数
-- batch_size = 1
-- channels = 64
-- depth = 32
-- height = 32
-- width = 32
-- # 创建ASC模块实例
-- block = ASC(channel=channels)
-- # 生成随机输入张量
-- input1 = torch.rand(batch_size, channels, depth, height, width)
-- input2 = torch.rand(batch_size, channels, depth, height, width)
-- # 通过ASC模块传递输入
-- output = block(input1, input2)
-- # 打印输入和输出张量的大小
-- print(f'Input1 size: {input1.size()}')
-- print(f'Input2 size: {input2.size()}')
-- print(f'Output size: {output.size()}')
 
 ## 2. 核心分析
 ### 类定义与参数
@@ -182,6 +165,16 @@ if __name__ == '__main__':
     print(f'Output shape: {outputs.shape}')
 ```
 
-## 4. 适用场景
-- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
-- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。
+## 4. 适用任务
+- **目标检测**
+- **图像分类**
+- **图像去噪**
+- **目标跟踪**
+- **去雨**
+- **去雾**
+- **去模糊**
+- **图像融合**
+- **语义分割/实例分割**
+- **超分辨率**
+- **注意力机制应用**
+- **集成推荐**: 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。

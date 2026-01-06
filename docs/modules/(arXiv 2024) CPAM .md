@@ -1,15 +1,14 @@
-# (arXiv 2024) CPAM 
+# ASF-YOLO: A novel YOLO model with attentional scale sequence fusion for cell instance segmentation
 
 ## 1. 模块简介
+- **论文地址**: [https://arxiv.org/pdf/2312.06458](https://arxiv.org/pdf/2312.06458)
 - **源文件**: `(arXiv 2024) CPAM .py`
 
 ### 设计机制
-- ĿASF-YOLO: A novel YOLO model with attentional scale sequence fusion for cell instance segmentation
-- Ŀ:  ASF-YOLOעƵĳ߶ںYOLOϸͼʵָ
-- ӣhttps://arxiv.org/pdf/2312.06458
-- ٷgithubhttps://github.com/mkang315/ASF-YOLO
-- ĪʲѧϢѧԺ
-- ؼʣҽѧͼСָYOLOںϣע
+- 中文题目:  ASF-YOLO：基于注意力机制的尺度序列融合YOLO框架用于细胞图像实例分割
+- 官方github：https://github.com/mkang315/ASF-YOLO
+- 所属机构：马来西亚莫纳什大学信息技术学院
+- 关键词：医学图像分析，小物体分割，YOLO，序列特征融合，注意力机制
 - Channel and Position Attention Mechanism (CPAM)
 
 ## 2. 核心分析
@@ -44,6 +43,9 @@ cpam = CPAM(32)
     print(output.size())
 ```
 
-## 4. 适用场景
-- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
-- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。
+## 4. 适用任务
+- **语义分割/实例分割**
+- **图像融合**
+- **医学图像处理**
+- **注意力机制应用**
+- **集成推荐**: 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。
