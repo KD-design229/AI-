@@ -1,18 +1,74 @@
 # Adaptive Graph Convolutional Recurrent Network for Traffic Forecasting
 
 ## 1. 模块简介
-- **相关论文/地址**: [https://arxiv.org/pdf/2007.02842](https://arxiv.org/pdf/2007.02842)
+- **论文地址**: [https://arxiv.org/pdf/2007.02842](https://arxiv.org/pdf/2007.02842)
 - **源文件**: `(AAAI 2019) AGCRN.py`
 
+### 设计机制
+- x shaped[B, N, C], node_embeddings shaped [N, D] -> supports shaped [N, N]
+- output shape [B, N, C]
+- default cheb_k = 3
+- x: B, num_nodes, input_dim
+- state: B, num_nodes, hidden_dim
+- shape of x: (B, T, N, D)
+- shape of init_state: (num_layers, B, N, hidden_dim)
+- current_inputs: the outputs of last layer: (B, T, N, hidden_dim)
+- output_hidden: the last state for each layer: (num_layers, B, N, hidden_dim)
+- last_state: (B, N, hidden_dim)
+
 ## 2. 核心分析
-该模块是基于上述论文实现的 PyTorch 组件，旨在提供即插即用的功能。通过对输入特征进行特定的变换（如注意力机制、特殊卷积或归一化），增强模型在计算机视觉任务中的表达能力。
+### 类定义与参数
+#### `class AVWGCN`
+- **描述**: 无文档说明。
+- **初始化参数**: `dim_in, dim_out, cheb_k, embed_dim`
 
-### 主要类定义
-- `AVWGCN`: 该模块实现的核心类之一。
-- `AGCRNCell`: 该模块实现的核心类之一。
-- `AVWDCRNN`: 该模块实现的核心类之一。
-- `AGCRN`: 该模块实现的核心类之一。
+#### `class AGCRNCell`
+- **描述**: 无文档说明。
+- **初始化参数**: `node_num, dim_in, dim_out, cheb_k, embed_dim`
 
-## 3. 使用建议
-- **集成方式**: 直接将 `(AAAI 2019) AGCRN.py` 中的代码复制到项目中，或者通过 `from (AAAI 2019) AGCRN import AGCRN` 引入。
-- **适用任务**: 图像分类、目标检测、语义分割等。
+#### `class AVWDCRNN`
+- **描述**: 无文档说明。
+- **初始化参数**: `node_num, dim_in, dim_out, cheb_k, embed_dim, num_layers`
+
+#### `class AGCRN`
+- **描述**: 无文档说明。
+- **初始化参数**: `args`
+
+## 3. 使用示例
+```python
+# 导入方式（参考）：from (AAAI 2019) AGCRN import ...
+
+class Args:
+        def __init__(self):
+            self.num_nodes = 10  # 假设图中有10个节点
+            self.input_dim = 1   # 每个节点的特征维度
+            self.rnn_units = 64  # RNN单元的数量
+            self.output_dim = 1  # 输出维度
+            self.horizon = 3     # 预测未来3个时间步
+            self.num_layers = 2  # 使用2层RNN
+            self.cheb_k = 3      # 切比雪夫多项式的阶数
+            self.embed_dim = 20  # 节点嵌入的维度
+
+    # 实例化参数
+    args = Args()
+
+    # 实例化模型
+    model = AGCRN(args)
+
+    # 创建一个虚拟的输入数据
+    input_tensor = torch.randn(1, 3, args.num_nodes, args.input_dim)
+    print("Input tensor size: ", input_tensor.size())  # 打印输入尺寸
+
+    # 创建虚拟的目标数据
+    target_tensor = torch.randn(1, args.horizon, args.num_nodes, args.output_dim)
+    print("Target tensor size:", target_tensor.size())  # 打印目标尺寸
+
+    # 将模型转换为训练模式并进行前向传播
+    model.train()
+    output = model(input_tensor, target_tensor)
+    print("Output size:       ", output.size())  # 打印输出尺寸
+```
+
+## 4. 适用场景
+- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
+- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。

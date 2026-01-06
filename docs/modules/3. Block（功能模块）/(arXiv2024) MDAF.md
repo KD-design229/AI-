@@ -3,15 +3,39 @@
 ## 1. 模块简介
 - **源文件**: `(arXiv2024) MDAF.py`
 
+### 设计机制
+- Multiscale Dual-Representation Alignment Filter (MDAF)
+
 ## 2. 核心分析
-该模块是基于上述论文实现的 PyTorch 组件，旨在提供即插即用的功能。通过对输入特征进行特定的变换（如注意力机制、特殊卷积或归一化），增强模型在计算机视觉任务中的表达能力。
+### 类定义与参数
+#### `class BiasFree_LayerNorm`
+- **描述**: 无文档说明。
+- **初始化参数**: `normalized_shape`
 
-### 主要类定义
-- `BiasFree_LayerNorm`: 该模块实现的核心类之一。
-- `WithBias_LayerNorm`: 该模块实现的核心类之一。
-- `LayerNorm`: 该模块实现的核心类之一。
-- `MDAF`: 该模块实现的核心类之一。
+#### `class WithBias_LayerNorm`
+- **描述**: 无文档说明。
+- **初始化参数**: `normalized_shape`
 
-## 3. 使用建议
-- **集成方式**: 直接将 `(arXiv2024) MDAF.py` 中的代码复制到项目中，或者通过 `from (arXiv2024) MDAF import MDAF` 引入。
-- **适用任务**: 图像分类、目标检测、语义分割等。
+#### `class LayerNorm`
+- **描述**: 无文档说明。
+- **初始化参数**: `dim, LayerNorm_type`
+
+#### `class MDAF`
+- **描述**: 无文档说明。
+- **初始化参数**: `dim, num_heads, LayerNorm_type`
+
+## 3. 使用示例
+```python
+# 导入方式（参考）：from (arXiv2024) MDAF import ...
+
+mdaf = MDAF(dim=32)  # 指定通道数
+    x1 = torch.randn(3, 32, 64, 64)  # b c h w  输入
+    x2 = torch.randn(3, 32, 64, 64)
+
+    output = mdaf(x1, x2)
+    print(output.size())  # torch.Size([3, 32, 64, 64])
+```
+
+## 4. 适用场景
+- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
+- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。

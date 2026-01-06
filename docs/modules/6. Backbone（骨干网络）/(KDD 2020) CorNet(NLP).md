@@ -3,13 +3,39 @@
 ## 1. 模块简介
 - **源文件**: `(KDD 2020) CorNet(NLP).py`
 
+### 设计机制
+- 打印输入和输出的尺寸
+
 ## 2. 核心分析
-该模块是基于上述论文实现的 PyTorch 组件，旨在提供即插即用的功能。通过对输入特征进行特定的变换（如注意力机制、特殊卷积或归一化），增强模型在计算机视觉任务中的表达能力。
+### 类定义与参数
+#### `class CorNetBlock`
+- **描述**: 无文档说明。
+- **初始化参数**: `context_size, output_size, cornet_act`
 
-### 主要类定义
-- `CorNetBlock`: 该模块实现的核心类之一。
-- `CorNet`: 该模块实现的核心类之一。
+#### `class CorNet`
+- **描述**: 无文档说明。
+- **初始化参数**: `output_size, cornet_dim, n_cornet_blocks`
 
-## 3. 使用建议
-- **集成方式**: 直接将 `(KDD 2020) CorNet(NLP).py` 中的代码复制到项目中，或者通过 `from (KDD 2020) CorNet(NLP) import CorNet` 引入。
-- **适用任务**: 图像分类、目标检测、语义分割等。
+## 3. 使用示例
+```python
+# 导入方式（参考）：from (KDD 2020) CorNet(NLP) import ...
+
+output_size = 10
+    cornet_dim = 100
+    n_cornet_blocks = 2
+    cornet_act = 'relu'
+
+    model = CorNet(output_size=output_size, cornet_dim=cornet_dim, n_cornet_blocks=n_cornet_blocks)
+
+    input_tensor = torch.rand(4, output_size)
+
+    output = model(input_tensor)
+
+    # 打印输入和输出的尺寸
+    print("Input size :", input_tensor.size())
+    print("Output size:", output.size())
+```
+
+## 4. 适用场景
+- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
+- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。

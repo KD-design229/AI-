@@ -3,13 +3,44 @@
 ## 1. 模块简介
 - **源文件**: `(AAAI 2025) ContrastDrivenFeatureAggregation.py`
 
+### 设计机制
+- ĿConDSeg: A General Medical Image Segmentation Framework via Contrast-Driven Feature Enhancement
+- ĿConDSegһͨԱǿͨҽѧͼָ
+- ӣhttps://arxiv.org/pdf/2412.08345
+- ٷgithubhttps://github.com/Mengqi-Lei/ConDSeg
+- йʴѧ人ٶȹ˾
+- ΢ŹںšAI
+
 ## 2. 核心分析
-该模块是基于上述论文实现的 PyTorch 组件，旨在提供即插即用的功能。通过对输入特征进行特定的变换（如注意力机制、特殊卷积或归一化），增强模型在计算机视觉任务中的表达能力。
+### 类定义与参数
+#### `class CBR`
+- **描述**: 无文档说明。
+- **初始化参数**: `in_c, out_c, kernel_size, padding, dilation, stride, act`
 
-### 主要类定义
-- `CBR`: 该模块实现的核心类之一。
-- `ContrastDrivenFeatureAggregation`: 该模块实现的核心类之一。
+#### `class ContrastDrivenFeatureAggregation`
+- **描述**: 无文档说明。
+- **初始化参数**: `in_c, dim, num_heads, kernel_size, padding, stride, attn_drop, proj_drop`
 
-## 3. 使用建议
-- **集成方式**: 直接将 `(AAAI 2025) ContrastDrivenFeatureAggregation.py` 中的代码复制到项目中，或者通过 `from (AAAI 2025) ContrastDrivenFeatureAggregation import ContrastDrivenFeatureAggregation` 引入。
-- **适用任务**: 图像分类、目标检测、语义分割等。
+## 3. 使用示例
+```python
+# 导入方式（参考）：from (AAAI 2025) ContrastDrivenFeatureAggregation import ...
+
+cdfa =ContrastDrivenFeatureAggregation(in_c=128, dim=128, num_heads=4)
+    # ͼ
+    x = torch.randn(1,128,32,32)
+    # ǰͼ
+    fg = torch.randn(1,128,32,32)
+    # ͼ
+    bg = torch.randn(1,128,32,32)
+    # ӡṹ
+    print(cdfa)
+    #ǰ򴫲,x,fg,bg
+    output = cdfa(x,fg,bg)
+    #ӡ״
+    print("input shape:", x.shape)
+    print("output shape:", output.shape)
+```
+
+## 4. 适用场景
+- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
+- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。

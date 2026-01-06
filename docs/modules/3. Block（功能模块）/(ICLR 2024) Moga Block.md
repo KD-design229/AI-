@@ -1,17 +1,41 @@
 # MogaNet: Multi-order Gated Aggregation Network (ICLR 2024)
 
 ## 1. 模块简介
-- **相关论文/地址**: [https://arxiv.org/pdf/2211.03295](https://arxiv.org/pdf/2211.03295)
+- **论文地址**: [https://arxiv.org/pdf/2211.03295](https://arxiv.org/pdf/2211.03295)
 - **源文件**: `(ICLR 2024) Moga Block.py`
 
+### 设计机制
+- Spatial Block with Multi-order Gated Aggregation
+- basic DW conv
+- DW conv 1
+- DW conv 2
+- a channel convolution
+
 ## 2. 核心分析
-该模块是基于上述论文实现的 PyTorch 组件，旨在提供即插即用的功能。通过对输入特征进行特定的变换（如注意力机制、特殊卷积或归一化），增强模型在计算机视觉任务中的表达能力。
+### 类定义与参数
+#### `class ElementScale`
+- **描述**: 无文档说明。
+- **初始化参数**: `embed_dims, init_value, requires_grad`
 
-### 主要类定义
-- `ElementScale`: 该模块实现的核心类之一。
-- `MultiOrderDWConv`: 该模块实现的核心类之一。
-- `MultiOrderGatedAggregation`: 该模块实现的核心类之一。
+#### `class MultiOrderDWConv`
+- **描述**: 无文档说明。
+- **初始化参数**: `embed_dims, dw_dilation, channel_split`
 
-## 3. 使用建议
-- **集成方式**: 直接将 `(ICLR 2024) Moga Block.py` 中的代码复制到项目中，或者通过 `from (ICLR 2024) Moga Block import MultiOrderGatedAggregation` 引入。
-- **适用任务**: 图像分类、目标检测、语义分割等。
+#### `class MultiOrderGatedAggregation`
+- **描述**: 无文档说明。
+- **初始化参数**: `embed_dims, attn_dw_dilation, attn_channel_split, attn_act_type, attn_force_fp32`
+
+## 3. 使用示例
+```python
+# 导入方式（参考）：from (ICLR 2024) Moga Block import ...
+
+input = torch.randn(1, 64, 32, 32)# 输入 B C H W
+    block = MultiOrderGatedAggregation(embed_dims=64)
+    output = block(input)
+    print(input.size())
+    print(output.size())
+```
+
+## 4. 适用场景
+- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
+- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。

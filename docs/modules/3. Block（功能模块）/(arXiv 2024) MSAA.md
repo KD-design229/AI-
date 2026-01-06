@@ -1,18 +1,52 @@
 # CM-UNet: Hybrid CNN-Mamba UNet for Remote Sensing Image Semantic Segmentation
 
 ## 1. 模块简介
-- **相关论文/地址**: [https://arxiv.org/pdf/2405.10530](https://arxiv.org/pdf/2405.10530)
+- **论文地址**: [https://arxiv.org/pdf/2405.10530](https://arxiv.org/pdf/2405.10530)
 - **源文件**: `(arXiv 2024) MSAA.py`
 
+### 设计机制
+- # x2 是从低到高，x4是从高到低的设计，x2传递语义信息，x4传递边缘问题特征补充
+- x_1_2_fusion = self.fusion_1x2(x1, x2)
+- x_1_4_fusion = self.fusion_1x4(x1, x4)
+- x_fused = x_1_2_fusion + x_1_4_fusion
+- Print the shapes of the inputs and the output
+
 ## 2. 核心分析
-该模块是基于上述论文实现的 PyTorch 组件，旨在提供即插即用的功能。通过对输入特征进行特定的变换（如注意力机制、特殊卷积或归一化），增强模型在计算机视觉任务中的表达能力。
+### 类定义与参数
+#### `class ChannelAttentionModule`
+- **描述**: 无文档说明。
+- **初始化参数**: `in_channels, reduction`
 
-### 主要类定义
-- `ChannelAttentionModule`: 该模块实现的核心类之一。
-- `SpatialAttentionModule`: 该模块实现的核心类之一。
-- `FusionConv`: 该模块实现的核心类之一。
-- `MSAA`: 该模块实现的核心类之一。
+#### `class SpatialAttentionModule`
+- **描述**: 无文档说明。
+- **初始化参数**: `kernel_size`
 
-## 3. 使用建议
-- **集成方式**: 直接将 `(arXiv 2024) MSAA.py` 中的代码复制到项目中，或者通过 `from (arXiv 2024) MSAA import MSAA` 引入。
-- **适用任务**: 图像分类、目标检测、语义分割等。
+#### `class FusionConv`
+- **描述**: 无文档说明。
+- **初始化参数**: `in_channels, out_channels, factor`
+
+#### `class MSAA`
+- **描述**: 无文档说明。
+- **初始化参数**: `in_channels, out_channels`
+
+## 3. 使用示例
+```python
+# 导入方式（参考）：from (arXiv 2024) MSAA import ...
+
+block = MSAA(in_channels=64, out_channels=128)
+    x1 = torch.randn(1, 64, 64, 64)
+    x2 = torch.randn(1, 64, 64, 64)
+    x4 = torch.randn(1, 64, 64, 64)
+
+    output = block(x1, x2, x4)
+
+    # Print the shapes of the inputs and the output
+    print(x1.size())
+    print(x2.size())
+    print(x4.size())
+    print(output.size())
+```
+
+## 4. 适用场景
+- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
+- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。

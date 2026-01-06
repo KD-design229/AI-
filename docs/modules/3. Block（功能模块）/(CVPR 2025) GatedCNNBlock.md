@@ -3,12 +3,47 @@
 ## 1. 模块简介
 - **源文件**: `(CVPR 2025) GatedCNNBlock.py`
 
+### 设计机制
+- 创建一个模拟输入张量，形状为 (batch_size, height, width, channels)
+- 初始化 GatedCNNBlock 模块
+- 前向传播
+- 打印输入和输出张量的形状
+
 ## 2. 核心分析
-该模块是基于上述论文实现的 PyTorch 组件，旨在提供即插即用的功能。通过对输入特征进行特定的变换（如注意力机制、特殊卷积或归一化），增强模型在计算机视觉任务中的表达能力。
+### 类定义与参数
+#### `class GatedCNNBlock`
+- **描述**: Our implementation of Gated CNN Block: https://arxiv.org/pdf/1612.08083
+Args: 
+    conv_ratio: control the number of channels to conduct depthwise convolution.
+        Conduct convolution on partial channels can improve practical efficiency.
+        The idea of partial channels is from ShuffleNet V2 (https://arxiv.org/abs/1807.11164) and 
+        also used by InceptionNeXt (https://arxiv.org/abs/2303.16900) and FasterNet (https://arxiv.org/abs/2303.03667)
+- **初始化参数**: `dim, expansion_ratio, kernel_size, conv_ratio, norm_layer, act_layer, drop_path`
 
-### 主要类定义
-- `GatedCNNBlock`: 该模块实现的核心类之一。
+## 3. 使用示例
+```python
+# 导入方式（参考）：from (CVPR 2025) GatedCNNBlock import ...
 
-## 3. 使用建议
-- **集成方式**: 直接将 `(CVPR 2025) GatedCNNBlock.py` 中的代码复制到项目中，或者通过 `from (CVPR 2025) GatedCNNBlock import GatedCNNBlock` 引入。
-- **适用任务**: 图像分类、目标检测、语义分割等。
+batch_size = 1  # Batch size
+    channels = 32   # 输入通道数
+    height = 256    # 输入图像高度
+    width = 256     # 输入图像宽度
+
+    # 创建一个模拟输入张量，形状为 (batch_size, height, width, channels)
+    x = torch.randn(batch_size, height, width, channels)
+
+    # 初始化 GatedCNNBlock 模块
+    model = GatedCNNBlock(dim=channels, expansion_ratio=8/3, kernel_size=7, conv_ratio=1.0, drop_path=0.1)
+    print(model)
+    print("微信公众号: AI缝合术!")
+    # 前向传播
+    output = model(x)
+
+    # 打印输入和输出张量的形状
+    print(f"Input shape: {x.shape}")
+    print(f"Output shape: {output.shape}")
+```
+
+## 4. 适用场景
+- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
+- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。

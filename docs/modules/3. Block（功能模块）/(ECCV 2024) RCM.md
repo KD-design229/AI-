@@ -1,17 +1,50 @@
 # Context-Guided Spatial Feature Reconstruction for Efficient Semantic Segmentation[ECCV 2024]
 
 ## 1. 模块简介
-- **相关论文/地址**: [https://arxiv.org/pdf/2405.06228](https://arxiv.org/pdf/2405.06228)
+- **论文地址**: [https://arxiv.org/pdf/2405.06228](https://arxiv.org/pdf/2405.06228)
 - **源文件**: `(ECCV 2024) RCM.py`
 
+### 设计机制
+- rectangular self-calibration attention (RCA)
+- [N, D, C, 1]
+- Rectangular Self-Calibration Module (RCM)
+
 ## 2. 核心分析
-该模块是基于上述论文实现的 PyTorch 组件，旨在提供即插即用的功能。通过对输入特征进行特定的变换（如注意力机制、特殊卷积或归一化），增强模型在计算机视觉任务中的表达能力。
+### 类定义与参数
+#### `class ConvMlp`
+- **描述**: 使用 1x1 卷积保持空间维度的 MLP
+    
+- **初始化参数**: `in_features, hidden_features, out_features, act_layer, norm_layer, bias, drop`
 
-### 主要类定义
-- `ConvMlp`: 该模块实现的核心类之一。
-- `RCA`: 该模块实现的核心类之一。
-- `RCM`: 该模块实现的核心类之一。
+#### `class RCA`
+- **描述**: 无文档说明。
+- **初始化参数**: `inp, kernel_size, ratio, band_kernel_size, dw_size, padding, stride, square_kernel_size, relu`
 
-## 3. 使用建议
-- **集成方式**: 直接将 `(ECCV 2024) RCM.py` 中的代码复制到项目中，或者通过 `from (ECCV 2024) RCM import RCM` 引入。
-- **适用任务**: 图像分类、目标检测、语义分割等。
+#### `class RCM`
+- **描述**: MetaNeXtBlock 块
+参数:
+    dim (int): 输入通道数.
+    drop_path (float): 随机深度率。默认: 0.0
+    ls_init_value (float): 层级比例初始化值。默认: 1e-6.
+- **初始化参数**: `dim, token_mixer, norm_layer, mlp_layer, mlp_ratio, act_layer, ls_init_value, drop_path, dw_size, square_kernel_size, ratio`
+
+## 3. 使用示例
+```python
+# 导入方式（参考）：from (ECCV 2024) RCM import ...
+
+input_tensor = torch.randn(1, 64, 32, 32)#输入 B C H W
+
+    # 实例化 RCM 模块
+    block = RCM(dim=64)
+
+    # 打印输入的形状
+    print(input_tensor.size())
+
+    # 将输入张量传递给 RCM 模块，并打印输出形状
+    output_tensor = block(input_tensor)
+    print(output_tensor.size())
+```
+
+## 4. 适用场景
+- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
+- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。

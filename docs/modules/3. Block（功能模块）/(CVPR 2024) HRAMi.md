@@ -1,17 +1,53 @@
 # Reciprocal Attention Mixing Transformer for Lightweight Image Restoration(CVPR 2024 Workshop)
 
 ## 1. 模块简介
-- **相关论文/地址**: [https://arxiv.org/abs/2305.11474](https://arxiv.org/abs/2305.11474)
+- **论文地址**: [https://arxiv.org/abs/2305.11474](https://arxiv.org/abs/2305.11474)
 - **源文件**: `(CVPR 2024) HRAMi.py`
 
+### 设计机制
+- H-RAMi(Hierarchical Reciprocal Attention Mixer)
+- Create sample input tensors
+- Assume the input tensors have spatial dimensions of 32x32, 16x16, 8x8, etc.
+- Pass the input through HRAMi
+- Print the shapes of input and output
+
 ## 2. 核心分析
-该模块是基于上述论文实现的 PyTorch 组件，旨在提供即插即用的功能。通过对输入特征进行特定的变换（如注意力机制、特殊卷积或归一化），增强模型在计算机视觉任务中的表达能力。
+### 类定义与参数
+#### `class MobiVari1`
+- **描述**: 无文档说明。
+- **初始化参数**: `dim, kernel_size, stride, act, out_dim`
 
-### 主要类定义
-- `MobiVari1`: 该模块实现的核心类之一。
-- `MobiVari2`: 该模块实现的核心类之一。
-- `HRAMi`: 该模块实现的核心类之一。
+#### `class MobiVari2`
+- **描述**: 无文档说明。
+- **初始化参数**: `dim, kernel_size, stride, act, out_dim, exp_factor, expand_groups`
 
-## 3. 使用建议
-- **集成方式**: 直接将 `(CVPR 2024) HRAMi.py` 中的代码复制到项目中，或者通过 `from (CVPR 2024) HRAMi import HRAMi` 引入。
-- **适用任务**: 图像分类、目标检测、语义分割等。
+#### `class HRAMi`
+- **描述**: 无文档说明。
+- **初始化参数**: `dim, kernel_size, stride, mv_ver, mv_act, exp_factor, expand_groups`
+
+## 3. 使用示例
+```python
+# 导入方式（参考）：from (CVPR 2024) HRAMi import ...
+
+hrami = HRAMi(dim=64)
+
+    # Create sample input tensors
+    # Assume the input tensors have spatial dimensions of 32x32, 16x16, 8x8, etc.
+    input = [
+        torch.randn(1, 64, 32, 32),  # Level 0
+        torch.randn(1, 64, 16, 16),  # Level 1
+        torch.randn(1, 64, 8, 8),  # Level 2
+        torch.randn(1, 64, 32, 32)  # Level 3 (final level)
+    ]
+
+    # Pass the input through HRAMi
+    output = hrami(input)
+
+    # Print the shapes of input and output
+    print(f"Input shapes: {[attn.shape for attn in input]}")
+    print(output.size())
+```
+
+## 4. 适用场景
+- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
+- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。

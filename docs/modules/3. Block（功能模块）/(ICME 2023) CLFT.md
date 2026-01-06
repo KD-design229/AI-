@@ -1,20 +1,60 @@
 # ABC: Attention with Bilinear Correlation for Infrared Small Target Detection ICME2023
 
 ## 1. 模块简介
-- **相关论文/地址**: [https://arxiv.org/pdf/2303.10321](https://arxiv.org/pdf/2303.10321)
+- **论文地址**: [https://arxiv.org/pdf/2303.10321](https://arxiv.org/pdf/2303.10321)
 - **源文件**: `(ICME 2023) CLFT.py`
 
+### 设计机制
+- bilinear attention module (BAM)
+- dilated convolution layers(DConv)
+- self.x_conv = nn.Conv2d(in_dim, out_dim, kernel_size=1)
+- convolution linear fusion transformer (CLFT)
+
 ## 2. 核心分析
-该模块是基于上述论文实现的 PyTorch 组件，旨在提供即插即用的功能。通过对输入特征进行特定的变换（如注意力机制、特殊卷积或归一化），增强模型在计算机视觉任务中的表达能力。
+### 类定义与参数
+#### `class BAM`
+- **描述**: 无文档说明。
+- **初始化参数**: `in_dim, in_feature, out_feature`
 
-### 主要类定义
-- `BAM`: 该模块实现的核心类之一。
-- `Conv`: 该模块实现的核心类之一。
-- `DConv`: 该模块实现的核心类之一。
-- `ConvAttention`: 该模块实现的核心类之一。
-- `FeedForward`: 该模块实现的核心类之一。
-- `CLFT`: 该模块实现的核心类之一。
+#### `class Conv`
+- **描述**: 无文档说明。
+- **初始化参数**: `in_dim`
 
-## 3. 使用建议
-- **集成方式**: 直接将 `(ICME 2023) CLFT.py` 中的代码复制到项目中，或者通过 `from (ICME 2023) CLFT import CLFT` 引入。
-- **适用任务**: 图像分类、目标检测、语义分割等。
+#### `class DConv`
+- **描述**: 无文档说明。
+- **初始化参数**: `in_dim`
+
+#### `class ConvAttention`
+- **描述**: 无文档说明。
+- **初始化参数**: `in_dim, in_feature, out_feature`
+
+#### `class FeedForward`
+- **描述**: 无文档说明。
+- **初始化参数**: `in_dim, out_dim`
+
+#### `class CLFT`
+- **描述**: 无文档说明。
+- **初始化参数**: `in_dim, out_dim, in_feature, out_feature`
+
+## 3. 使用示例
+```python
+# 导入方式（参考）：from (ICME 2023) CLFT import ...
+
+block = CLFT(64,64,32*32,32) # 输入通道数，输出通道数 图像大小 H*W，H or W
+
+
+    input = torch.randn(3, 64, 32, 32)   #输入tensor形状 B C H W
+
+    # Print input shape
+    print(input.size()) # 输入形状
+
+    # Pass the input tensor through the model
+    output = block(input)
+
+    # Print output shape
+    print(output.size()) # 输出形状
+```
+
+## 4. 适用场景
+- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
+- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。

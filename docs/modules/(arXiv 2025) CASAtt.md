@@ -3,14 +3,56 @@
 ## 1. 模块简介
 - **源文件**: `(arXiv 2025) CASAtt.py`
 
+### 设计机制
+- ĿCAS-ViT: Convolutional Additive Self-attention Vision Transformers for Efficient Mobile Applications
+- ĿCAS-ViTڸЧƶӦõľעӾTransformer
+- ӣhttps://arxiv.org/pdf/2408.03703?
+- ٷgithubhttps://github.com/Tianfang-Zhang/CAS-ViT
+- ƼоԺ廪ѧԶϵʢٴѧϵ籾ѧѧϵ
+- ΢ŹںšAI
+- ȫ弴ģ룺https://github.com/AIFengheshu/Plug-play-modules
+- ģƶ GPUã
+- (batch_size, channels, height, width)
+- ʼ casatt ģ
+
 ## 2. 核心分析
-该模块是基于上述论文实现的 PyTorch 组件，旨在提供即插即用的功能。通过对输入特征进行特定的变换（如注意力机制、特殊卷积或归一化），增强模型在计算机视觉任务中的表达能力。
+### 类定义与参数
+#### `class SpatialOperation`
+- **描述**: 无文档说明。
+- **初始化参数**: `dim`
 
-### 主要类定义
-- `SpatialOperation`: 该模块实现的核心类之一。
-- `ChannelOperation`: 该模块实现的核心类之一。
-- `CASAtt`: 该模块实现的核心类之一。
+#### `class ChannelOperation`
+- **描述**: 无文档说明。
+- **初始化参数**: `dim`
 
-## 3. 使用建议
-- **集成方式**: 直接将 `(arXiv 2025) CASAtt.py` 中的代码复制到项目中，或者通过 `from (arXiv 2025) CASAtt import CASAtt` 引入。
-- **适用任务**: 图像分类、目标检测、语义分割等。
+#### `class CASAtt`
+- **描述**: 无文档说明。
+- **初始化参数**: `dim, attn_bias, proj_drop`
+
+## 3. 使用示例
+```python
+# 导入方式（参考）：from (arXiv 2025) CASAtt import ...
+
+# ģƶ GPUã
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    #  (batch_size, channels, height, width)
+    x = torch.randn(1, 32, 256, 256).to(device)
+
+    # ʼ casatt ģ
+    casatt=CASAtt(dim=32)
+    print(casatt)
+    print("΢Źں:AI")
+    casatt = casatt.to(device)
+
+    # ǰ򴫲
+    output = casatt(x)
+    
+    # ӡ״
+    print("״:", x.shape)
+    print("״:", output.shape)
+```
+
+## 4. 适用场景
+- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
+- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。

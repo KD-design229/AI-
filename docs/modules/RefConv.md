@@ -3,14 +3,45 @@
 ## 1. 模块简介
 - **源文件**: `RefConv.py`
 
+### 设计机制
+- ĿRefConv: Re-parameterized Refocusing Convolution for Powerful ConvNets
+- Ŀ:  RefConvǿ²ؾ۽
+- ӣhttps://arxiv.org/pdf/2310.10563
+- ٷgithubhttps://github.com/Aiolus-X/RefConv
+- ϾѧѶAIʵ
+- ΢ŹںšAI
+- nn.init.zeros_(self.convmap.weight)
+- conv_layer(inp, oup, 3, stride, 1, bias=False),
+
 ## 2. 核心分析
-该模块是基于上述论文实现的 PyTorch 组件，旨在提供即插即用的功能。通过对输入特征进行特定的变换（如注意力机制、特殊卷积或归一化），增强模型在计算机视觉任务中的表达能力。
+### 类定义与参数
+#### `class RepConv`
+- **描述**: 无文档说明。
+- **初始化参数**: `in_channels, out_channels, kernel_size, stride, padding, groups, map_k`
 
-### 主要类定义
-- `RepConv`: 该模块实现的核心类之一。
-- `Hswish`: 该模块实现的核心类之一。
-- `Hsigmoid`: 该模块实现的核心类之一。
+#### `class Hswish`
+- **描述**: 无文档说明。
+- **初始化参数**: `inplace`
 
-## 3. 使用建议
-- **集成方式**: 直接将 `RefConv.py` 中的代码复制到项目中，或者通过 `from RefConv import Hsigmoid` 引入。
-- **适用任务**: 图像分类、目标检测、语义分割等。
+#### `class Hsigmoid`
+- **描述**: 无文档说明。
+- **初始化参数**: `inplace`
+
+## 3. 使用示例
+```python
+# 导入方式（参考）：from RefConv import ...
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"Using device: {device}")
+
+    repconv = RepConv(in_channels=32, out_channels=64, kernel_size=3, stride=1, padding=None, groups=1, map_k=3).to(device)  # ģƶ豸
+    input = torch.rand(1, 32, 256, 256).to(device)  # ƶ豸
+
+    output = repconv(input)
+    print(f"\nInput shape: {input.shape}")
+    print(f"Output shape: {output.shape}")
+```
+
+## 4. 适用场景
+- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
+- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。

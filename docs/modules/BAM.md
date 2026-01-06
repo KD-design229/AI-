@@ -1,18 +1,52 @@
 # BAM: Bottleneck Attention Module
 
 ## 1. 模块简介
-- **相关论文/地址**: [http://bmvc2018.org/contents/papers/0092.pdf](http://bmvc2018.org/contents/papers/0092.pdf)
+- **论文地址**: [http://bmvc2018.org/contents/papers/0092.pdf](http://bmvc2018.org/contents/papers/0092.pdf)
 - **源文件**: `BAM.py`
 
+### 设计机制
+- 中文题目:  BAM：瓶颈注意力模块
+- 官方github：https://github.com/Jongchan/attention-module
+- 所属机构：Lunit Inc., 韩国; 韩国科学技术院(KAIST), 韩国; Adobe Research, 美国
+- 关键词： 瓶颈注意力模块, 深度神经网络, 注意力机制, 图像分类, 目标检测
+- 使用插值调整大小
+- 随机生成输入张量 (B, C, H, W)
+- 打印输入张量的形状
+- 前向传播
+- 打印输出张量的形状
+
 ## 2. 核心分析
-该模块是基于上述论文实现的 PyTorch 组件，旨在提供即插即用的功能。通过对输入特征进行特定的变换（如注意力机制、特殊卷积或归一化），增强模型在计算机视觉任务中的表达能力。
+### 类定义与参数
+#### `class Flatten`
+- **描述**: 无文档说明。
 
-### 主要类定义
-- `Flatten`: 该模块实现的核心类之一。
-- `ChannelAttention`: 该模块实现的核心类之一。
-- `SpatialAttention`: 该模块实现的核心类之一。
-- `BAMBlock`: 该模块实现的核心类之一。
+#### `class ChannelAttention`
+- **描述**: 无文档说明。
+- **初始化参数**: `channel, reduction, num_layers`
 
-## 3. 使用建议
-- **集成方式**: 直接将 `BAM.py` 中的代码复制到项目中，或者通过 `from BAM import BAMBlock` 引入。
-- **适用任务**: 图像分类、目标检测、语义分割等。
+#### `class SpatialAttention`
+- **描述**: 无文档说明。
+- **初始化参数**: `channel, reduction, num_layers, dia_val`
+
+#### `class BAMBlock`
+- **描述**: 无文档说明。
+- **初始化参数**: `channel, reduction, dia_val`
+
+## 3. 使用示例
+```python
+# 导入方式（参考）：from BAM import ...
+
+bam = BAMBlock(channel=32)
+    # 随机生成输入张量 (B, C, H, W)
+    input_tensor = torch.rand(1, 32, 256, 256)
+    # 打印输入张量的形状
+    print(f"输入张量的形状: {input_tensor.shape}")
+    # 前向传播
+    output_tensor = bam(input_tensor)
+    # 打印输出张量的形状
+    print(f"输出张量的形状: {output_tensor.shape}")
+```
+
+## 4. 适用场景
+- 该模块适用于各类计算机视觉任务，如图像分类、目标检测和语义分割等。
+- 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。
