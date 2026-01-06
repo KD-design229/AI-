@@ -1,0 +1,56 @@
+# MogaNet: Multi-order Gated Aggregation Network (ICLR 2024)
+
+## 1. 模块简介
+- **论文地址**: [https://arxiv.org/pdf/2211.03295](https://arxiv.org/pdf/2211.03295)
+- **源文件**: `(ICLR 2024) CA Block.py`
+
+### 设计机制
+- FFN with Channel Aggregation
+- Build activation layer
+- A learnable element-wise scaler.
+- x_d: [B, C, H, W] -> [B, 1, H, W]
+
+## 2. 核心分析
+### 类定义与参数
+#### `class ElementScale`
+- **描述**: 无文档说明。
+- **初始化参数**: `embed_dims, init_value, requires_grad`
+
+#### `class ChannelAggregationFFN`
+- **描述**: An implementation of FFN with Channel Aggregation.
+
+Args:
+    embed_dims (int): The feature dimension. Same as
+        `MultiheadAttention`.
+    feedforward_channels (int): The hidden dimension of FFNs.
+    kernel_size (int): The depth-wise conv kernel size as the
+        depth-wise convolution. Defaults to 3.
+    act_type (str): The type of activation. Defaults to 'GELU'.
+    ffn_drop (float, optional): Probability of an element to be
+        zeroed in FFN. Default 0.0.
+- **初始化参数**: `embed_dims, kernel_size, act_type, ffn_drop`
+
+## 3. 使用示例
+```python
+# 导入方式（参考）：from (ICLR 2024) CA Block import ...
+
+input = torch.randn(1, 64, 32, 32)# 输入 B C H W
+    block = ChannelAggregationFFN(embed_dims=64)
+    output = block(input)
+    print(input.size())
+    print(output.size())
+```
+
+## 4. 适用任务
+- **目标检测**
+- **图像分类**
+- **图像去噪**
+- **目标跟踪**
+- **去雨**
+- **去雾**
+- **去模糊**
+- **图像融合**
+- **语义分割/实例分割**
+- **超分辨率**
+- **注意力机制应用**
+- **集成推荐**: 特别推荐在需要增强模型对特定特征（如空间位置、通道相关性或多尺度信息）的敏感度时使用。
